@@ -1,0 +1,239 @@
+/* Estilos generales */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/* Encabezado */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+h1, h2, h3 {
+    margin-top: 0;
+}
+
+/* Formularios */
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+    padding: 1px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    margin: 0 -10px;
+    flex-wrap: wrap;
+}
+
+.col {
+    flex: 1;
+    padding: 0 10px;
+    min-width: 200px;
+}
+
+/* Tablas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-success {
+    background-color: #2ecc71;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-group {
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Mensajes de alerta */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Mensajes de error */
+.error-text {
+    color: #e74c3c;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+input.error, select.error {
+    border-color: #e74c3c;
+}
+
+/* Mensajes flash */
+.flash-message {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .col {
+        flex: 100%;
+    }
+    
+    table, th, td {
+        font-size: 14px;
+    }
+    
+    th, td {
+        padding: 5px;
+    }
+}
+
+/* Estilos para selectores */
+select {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    max-height: 34px;  /* Control de altura */
+    display: block;
+    min-width: 120px;
+}
+
+/* Asegurar que las opciones se muestren completas */
+select option {
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* Ajustar el ancho de los selectores en la tabla */
+td select {
+    width: 100%;
+    min-width: 120px;
+}
+
+/* Estilos para la sección de Información del Ensayo (dentro de las muestras) */
+.ensayo-info-card {
+    padding: 15px;
+    background-color: #f8f9fa; /* Un gris muy claro, similar al de Bootstrap para fondos sutiles */
+    border-radius: 0.25rem; /* Radio de borde estándar de Bootstrap */
+    margin-top: 10px; /* Espacio arriba */
+    margin-bottom: 10px; /* Espacio abajo */
+    border: 1px solid #dee2e6; /* Borde estándar de Bootstrap */
+}
+
+.ensayo-info-title {
+    margin-top: 0;
+    color: #0056b3; /* Azul oscuro, consistente con estilos previos */
+    border-bottom: 1px solid #cce5ff; /* Borde inferior azul claro */
+    padding-bottom: 0.5rem; /* Espaciado inferior del padding */
+    margin-bottom: 1rem; /* Margen inferior */
+    font-size: 1.1rem; /* Tamaño de fuente ligeramente ajustado */
+    font-weight: 500; /* Un poco más de peso */
+}
+
+.ensayo-info-label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.25rem; /* Pequeño margen inferior */
+    color: #495057; /* Color de texto estándar de Bootstrap */
+}
+
+/* Ajuste para inputs readonly dentro de la tarjeta de ensayo, si es necesario */
+.ensayo-info-card input[readonly].form-control {
+    background-color: #e9ecef; /* Color de fondo estándar de Bootstrap para readonly */
+}

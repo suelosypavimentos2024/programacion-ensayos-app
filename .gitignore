@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Flask
+instance/
+
+# Google Cloud
+credentials.json
+
+# Build and distribution
+build/
+dist/
+*.egg-info/
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Auto-py-to-exe
+output/
+
+# Eel specific (if any temporary files are generated)
+# Add Eel specific patterns if needed
+
+# Other
+.vscode/
+.idea/
+*.swp
+*.swo
