@@ -43,7 +43,7 @@ label {
 input[type="text"],
 input[type="number"],
 input[type="date"] {
-    width: 200%;
+    width: 100%;
     padding: 1px;
     border: 1px solid #ddd;
     border-radius: 4px;
