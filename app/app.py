@@ -117,11 +117,11 @@ def submit_form():
             if fecha > datetime.now():
                 return jsonify({'success': False, 'message': 'La fecha no puede ser en el futuro'})
         
-        # Validar cantidad como número
-        try:
-            cantidad = float(data.get('cantidad', 0))
-        except ValueError:
-            return jsonify({'success': False, 'message': 'La cantidad debe ser un número válido'})
+        # Validar cantidad como número (Comentado temporalmente ya que cantidad ahora está en cada muestra)
+        # try:
+        #     cantidad = float(data.get('cantidad', 0))
+        # except ValueError:
+        #     return jsonify({'success': False, 'message': 'La cantidad debe ser un número válido'})
         
         # Obtener el email del usuario si está autenticado con Google
         user_email_from = None
