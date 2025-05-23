@@ -105,7 +105,7 @@ def submit_form():
             return jsonify({'success': False, 'message': 'No se recibieron datos'})
         
         # Validar campos requeridos
-        required_fields = ['fecha', 'responsable', 'muestras']
+        required_fields = ['fecha', 'muestras']
         for field in required_fields:
             if field not in data:
                 return jsonify({'success': False, 'message': f'Campo requerido faltante: {field}'})

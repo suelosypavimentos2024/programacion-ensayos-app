@@ -331,14 +331,10 @@ document.addEventListener('DOMContentLoaded', function() {
     function validarFormulario() {
         let esValido = true;
         
-        // Validar campos obligatorios del encabezado
-        const camposObligatorios = ['proyecto', 'orden_trabajo', 'anexo', 'cotizacion', 'fecha', 'responsable', 'codigo_ensayo_principal'];
-        camposObligatorios.forEach(function(id) {
-            const campo = document.getElementById(id);
-            if (campo && !validarCampo(campo)) {
-                esValido = false;
-            }
-        });
+        if (!proyecto || !cotizacion || !fecha) {
+            alert('Por favor, complete todos los campos generales requeridos.');
+            return false;
+        }
         
         // Validar fecha (no futura)
         if (!validarFecha(document.getElementById('fecha'))) {
@@ -393,14 +389,16 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Función para recopilar datos del formulario
     function recopilarDatos() {
-        const datos = {
-            proyecto: document.getElementById('proyecto').value,
-            orden_trabajo: document.getElementById('orden_trabajo').value,
-            anexo: document.getElementById('anexo').value,
-            cotizacion: document.getElementById('cotizacion').value,
-            fecha: document.getElementById('fecha').value,
-            responsable: document.getElementById('responsable').value,
-            correo_solicitante: document.getElementById('correo_solicitante').value,
+        // Obtener otros campos del formulario
+        const proyecto = document.getElementById('proyecto').value.trim();
+        const cotizacion = document.getElementById('cotizacion').value.trim();
+        const fecha = document.getElementById('fecha').value;
+
+        // Crear objeto con los datos del formulario
+        const formData = {
+            proyecto,
+            cotizacion,
+            fecha,
             muestras: []
         };
         
