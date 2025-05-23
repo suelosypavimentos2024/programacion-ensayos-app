@@ -8,12 +8,13 @@
 </head>
 <body>
     <header>
-        <h1>Suelos y Pavimentos</h1>
-        <p>Sistema de Programación de Ensayos</p>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo Suelos y Pavimentos" style="max-width: 500px; margin-bottom: 10px;">
+        <h1>SUELOS Y PAVIMENTOS GREGORIO ROJAS & CIA. LTDA</h1>
+        <p>Programación de ejecucuion Ensayos</p>
     </header>
 
     <div class="container">
-        <h2>Bienvenido al Sistema de Programación de Ensayos</h2>
+        <h2>Bienvenido al formulario de Programación de ejecucion de Ensayos</h2>
         
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -34,4 +35,4 @@
         </div>
     </div>  
 </body>
-</html> 
+</html>
