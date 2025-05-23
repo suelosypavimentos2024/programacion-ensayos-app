@@ -422,10 +422,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 documento_normativo: filaEnsayo.querySelector('.documento_normativo').value
             };
             
-            datos.muestras.push(muestra);
+            formData.muestras.push(muestra);
         });
         
-        return datos;
+        return formData;
     }
     
     // Evento para enviar el formulario
