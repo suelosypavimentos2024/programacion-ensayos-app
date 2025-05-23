@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, flash, redirect, url
 import os
 import json
 from datetime import datetime
+from werkzeug.middleware.proxy_fix import ProxyFix # Import ProxyFix
 from .excel_reader import ExcelReader
 from .utils import enviar_correo
 from .config import DEBUG, SECRET_KEY, MAIL_RECIPIENTS
@@ -14,6 +15,7 @@ if DEBUG:
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1) # Add ProxyFix
 app.config['SECRET_KEY'] = SECRET_KEY
 app.config['DEBUG'] = DEBUG
 app.config['GOOGLE_OAUTH2_CLIENT_ID'] = os.getenv('GOOGLE_OAUTH2_CLIENT_ID')
