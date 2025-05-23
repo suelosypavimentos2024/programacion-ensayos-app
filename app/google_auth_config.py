@@ -14,19 +14,39 @@ import json
 import pickle
 
 def get_flow():
-    # Ruta al archivo de credenciales de Google
-    credentials_path = os.path.join(os.path.dirname(__file__), 'credentials.json')
-    
-    if not os.path.exists(credentials_path):
-        raise FileNotFoundError("No se encontró el archivo credentials.json. Por favor, crea uno en la carpeta de la aplicación.")
-    
-    # Crear el flujo de autenticación
+    client_id = os.getenv('GOOGLE_OAUTH2_CLIENT_ID')
+    client_secret = os.getenv('GOOGLE_OAUTH2_CLIENT_SECRET')
     redirect_uri = os.getenv('GOOGLE_REDIRECT_URI', 'http://localhost:5000/callback')
-    flow = Flow.from_client_secrets_file(
-        credentials_path,
-        scopes=['openid', 'https://www.googleapis.com/auth/gmail.send', 'https://www.googleapis.com/auth/userinfo.email'],
-        redirect_uri=redirect_uri
-    )
+    scopes = ['openid', 'https://www.googleapis.com/auth/gmail.send', 'https://www.googleapis.com/auth/userinfo.email']
+
+    if client_id and client_secret:
+        # Usar variables de entorno si están disponibles (para producción)
+        client_config = {
+            "web": {
+                "client_id": client_id,
+                "client_secret": client_secret,
+                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                "token_uri": "https://oauth2.googleapis.com/token",
+                "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+                "redirect_uris": [redirect_uri] # Asegúrate que el redirect_uri de Render esté aquí o se maneje dinámicamente
+            }
+        }
+        flow = Flow.from_client_config(
+            client_config,
+            scopes=scopes,
+            redirect_uri=redirect_uri
+        )
+    else:
+        # Intentar cargar desde credentials.json (para desarrollo local)
+        credentials_path = os.path.join(os.path.dirname(__file__), 'credentials.json')
+        if not os.path.exists(credentials_path):
+            raise FileNotFoundError("No se encontró el archivo credentials.json y las variables de entorno GOOGLE_OAUTH2_CLIENT_ID y GOOGLE_OAUTH2_CLIENT_SECRET no están configuradas.")
+        
+        flow = Flow.from_client_secrets_file(
+            credentials_path,
+            scopes=scopes,
+            redirect_uri=redirect_uri
+        )
     return flow
 
 def get_auth_url():
