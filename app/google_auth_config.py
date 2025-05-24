@@ -17,7 +17,7 @@ def get_flow():
     client_id = os.getenv('GOOGLE_OAUTH2_CLIENT_ID')
     client_secret = os.getenv('GOOGLE_OAUTH2_CLIENT_SECRET')
     redirect_uri = os.getenv('GOOGLE_REDIRECT_URI', 'http://localhost:5000/callback')
-    scopes = ['openid', 'https://www.googleapis.com/auth/gmail.send', 'https://www.googleapis.com/auth/userinfo.email']
+    scopes = ['https://www.googleapis.com/auth/userinfo.email', 'openid', 'https://www.googleapis.com/auth/gmail.send']
 
     if client_id and client_secret:
         # Usar variables de entorno si están disponibles (para producción)
@@ -54,7 +54,8 @@ def get_auth_url():
     flow = get_flow()
     auth_url, _ = flow.authorization_url(
         access_type='offline',
-        include_granted_scopes='false'  # Changed to false to force re-consent
+        include_granted_scopes='false',  # Changed to false to force re-consent
+        prompt='consent'  # Explicitly prompt for consent
     )
     return auth_url
 
