@@ -45,17 +45,14 @@ def generar_html_resumen(datos_formulario):
     </head>
     <body>
         <div class="header">
-            <h2>Programacion Ensayos - Orden de Trabajo {datos_formulario['orden_trabajo']}</h2>
+            <h2>Programacion Ensayos - Orden de Trabajo {datos_formulario.get('orden_trabajo', '')}</h2>
         </div>
         
         <h3>Informacion General</h3>
         <table>
-            <tr><td><strong>Proyecto:</strong></td><td>{datos_formulario['proyecto']}</td></tr>
-            <tr><td><strong>Orden de trabajo:</strong></td><td>{datos_formulario['orden_trabajo']}</td></tr>
-            <tr><td><strong>Anexo:</strong></td><td>{datos_formulario['anexo']}</td></tr>
-            <tr><td><strong>Cotizacion:</strong></td><td>{datos_formulario['cotizacion']}</td></tr>
-            <tr><td><strong>Fecha:</strong></td><td>{datos_formulario['fecha']}</td></tr>
-            <tr><td><strong>Responsable:</strong></td><td>{datos_formulario['responsable']}</td></tr>
+            <tr><td><strong>Proyecto:</strong></td><td>{datos_formulario.get('proyecto', '')}</td></tr>
+            <tr><td><strong>Cotizacion:</strong></td><td>{datos_formulario.get('cotizacion', '')}</td></tr>
+            <tr><td><strong>Fecha:</strong></td><td>{datos_formulario.get('fecha', '')}</td></tr>
         </table>
         
         <h3>Muestras</h3>
@@ -85,7 +82,7 @@ def enviar_correo(datos_formulario, user_credentials=None, user_email_from=None)
     Si se proporcionan user_credentials y user_email_from, intenta enviar usando la API de Gmail.
     De lo contrario, utiliza el método SMTP configurado.
     """
-    subject = f"Programacion Ensayos - Orden de Trabajo {datos_formulario['orden_trabajo']}"
+    subject = f"Programacion Ensayos - Orden de Trabajo {datos_formulario.get('orden_trabajo', '')}"
     html_body = generar_html_resumen(datos_formulario)
 
     if user_credentials and user_email_from:
