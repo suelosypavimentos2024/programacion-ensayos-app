@@ -54,7 +54,7 @@ def get_auth_url():
     flow = get_flow()
     auth_url, _ = flow.authorization_url(
         access_type='offline',
-        include_granted_scopes='true'
+        include_granted_scopes='false'  # Changed to false to force re-consent
     )
     return auth_url
 
