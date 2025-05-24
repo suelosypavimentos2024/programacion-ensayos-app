@@ -187,13 +187,26 @@ def internal_server_error(e):
 def callback():
     """Manejar la respuesta de la autenticación de Google"""
     flow = get_flow()
-    flow.fetch_token(authorization_response=request.url)
-    
-    # Almacenar las credenciales en la sesión
-    credentials = flow.credentials
-    session['credentials'] = credentials_to_dict(credentials)
-    
-    return redirect(url_for('form'))
+    try:
+        flow.fetch_token(authorization_response=request.url)
+        
+        # Almacenar las credenciales en la sesión
+        credentials = flow.credentials
+        session['credentials'] = credentials_to_dict(credentials)
+        
+        # Opcional: Verificar si el correo es de Gmail si es un requisito estricto
+        # user_info_service = googleapiclient.discovery.build('oauth2', 'v2', credentials=credentials)
+        # user_info = user_info_service.userinfo().get().execute()
+        # email = user_info.get('email')
+        # if not email.endswith('@gmail.com'):
+        #     flash('Acceso denegado: solo se permiten cuentas de Gmail.', 'error')
+        #     return redirect(url_for('index')) # O a una página de error específica
+            
+        return redirect(url_for('form'))
+    except Exception as e:
+        app.logger.error(f"Error en el callback de OAuth2: {str(e)}")
+        flash(f"Error al iniciar sesión con Google: {str(e)}. Asegúrate de que tu cuenta de Google esté configurada correctamente y que la aplicación tenga los permisos necesarios. Verifica también la configuración de URI de redirección en Google Cloud Console.", 'error')
+        return redirect(url_for('index')) # Redirigir a la página principal o a una de error
 
 @app.route('/privacy')
 def privacy():
