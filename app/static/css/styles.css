@@ -189,14 +189,14 @@ select {
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 14px;
-    max-height: 34px;  /* Control de altura */
+    /* max-height: 34px; */ /* Eliminado para evitar problemas de flickering en móviles */
     display: block;
     min-width: 120px;
 }
 
 /* Asegurar que las opciones se muestren completas */
 select option {
-    padding: 8px;
+    /* padding: 8px; */ /* Eliminado para simplificar y evitar conflictos */
     font-size: 14px;
 }
 
