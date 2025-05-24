@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Ejecutar la corrección al cargar la página
-    setTimeout(corregirElementosPagina, 100);
+    corregirElementosPagina();
     
     // Función para agregar una nueva muestra
     function agregarMuestra() {
@@ -234,9 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (btnAgregarMuestra) { 
         btnAgregarMuestra.addEventListener('click', function() {
             agregarMuestra();
-            // Volver a corregir los elementos después de agregar una nueva muestra para asegurar 
-            // que los selectores y listeners estén bien configurados en la nueva fila.
-            setTimeout(corregirElementosPagina, 50); // Un pequeño delay puede ayudar
+            // La función agregarMuestra ya se encarga de reconstruir los selectores
+            // para la nueva fila. No es necesario llamar a corregirElementosPagina aquí.
         });
     }
 
