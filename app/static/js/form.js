@@ -21,7 +21,8 @@ document.addEventListener('DOMContentLoaded', function() {
         "Asfalto", 
         "Arena", 
         "Grava", 
-        "Suelo"
+        "Suelo",
+        "Material Granular"
     ];
     
     const codigosEnsayoPredeterminados = [
@@ -61,6 +62,31 @@ document.addEventListener('DOMContentLoaded', function() {
         // 3. Reconstruir todos los selectores de tipo_material
         document.querySelectorAll('.tipo_material').forEach(select => {
             reconstruirSelector(select, tiposMaterialParaUsar); // Usar la lista determinada
+        });
+
+        // Reconstruir todos los selectores de tipo_material_especifico
+        const tiposMaterialEspecificoParaUsar = [
+            "Base granular",
+            "SubBase granular",
+            "Recebo",
+            "Fresado",
+            "Viga",
+            "Ciilindro 4\" 1500 PSI",
+            "Ciilindro 4\" 2000 PSI",
+            "Ciilindro 4\" 3000 PSI",
+            "Ciilindro 4\" 4500 PSI",
+            "Ciilindro 6 1500 PSI",
+            "Ciilindro 6\" 2000 PSI",
+            "Ciilindro 6\" 3000 PSI",
+            "Ciilindro 6\" 4500 PSI",
+            "Nucleo 2\"",
+            "Nucleo 3\"",
+            "Shelby",
+            "SS",
+            "Bolsa Con suelo"
+        ];
+        document.querySelectorAll('.tipo_material_especifico').forEach(select => {
+            reconstruirSelector(select, tiposMaterialEspecificoParaUsar);
         });
         
         // 4. Reconstruir todos los selectores de codigo_ensayo con TODOS los códigos de la base de datos
@@ -173,6 +199,31 @@ document.addEventListener('DOMContentLoaded', function() {
         const selectTipoMaterial = nuevaFilaMuestra.querySelector('.tipo_material');
         if (selectTipoMaterial) {
             reconstruirSelector(selectTipoMaterial, tiposMaterialParaUsar); // Usar la lista determinada
+        }
+
+        const selectTipoMaterialEspecifico = nuevaFilaMuestra.querySelector('.tipo_material_especifico');
+        if (selectTipoMaterialEspecifico) {
+            const tiposMaterialEspecificoParaUsar = [
+                "Base granular",
+                "SubBase granular",
+                "Recebo",
+                "Fresado",
+                "Viga",
+                "Ciilindro 4\" 1500 PSI",
+                "Ciilindro 4\" 2000 PSI",
+                "Ciilindro 4\" 3000 PSI",
+                "Ciilindro 4\" 4500 PSI",
+                "Ciilindro 6 1500 PSI",
+                "Ciilindro 6\" 2000 PSI",
+                "Ciilindro 6\" 3000 PSI",
+                "Ciilindro 6\" 4500 PSI",
+                "Nucleo 2\"",
+                "Nucleo 3\"",
+                "Shelby",
+                "SS",
+                "Bolsa Con suelo"
+            ];
+            reconstruirSelector(selectTipoMaterialEspecifico, tiposMaterialEspecificoParaUsar);
         }
         
         // Manejar el selector de código de ensayo
@@ -414,6 +465,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 sondeo: filaMuestra.querySelector('.sondeo').value,
                 numero_muestra: filaMuestra.querySelector('.numero_muestra').value,
                 tipo_material: filaMuestra.querySelector('.tipo_material').value,
+                tipo_material_especifico: filaMuestra.querySelector('.tipo_material_especifico').value,
                 profundidad: filaMuestra.querySelector('.profundidad').value,
                 cantidad: filaMuestra.querySelector('.cantidad').value,
                 codigo_ensayo: filaEnsayo.querySelector('.codigo_ensayo').value,

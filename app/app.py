@@ -44,7 +44,7 @@ def index():
 def form():
     """Formulario de programación de ensayos"""
     # Definir valores predeterminados y cargar datos base ANTES de la verificación de credenciales
-    tipos_material_default = ["Concreto", "Asfalto", "Arena", "Grava", "Suelo"]
+    tipos_material = ["Concreto", "Asfalto", "Arena", "Grava", "Suelo", "Material Granular"]  # Ejemplo, estos podrían venir de una BD
     codigos_ensayo_default = ["FLEX-001", "COMP-002", "TRAC-003", "DENS-004", "HUM-005"]
     unidades_default = ["kg", "g", "m³", "cm³"]
     normas_default = ["ASTM D698", "ASTM D1557", "ASTM C39", "ASTM C78"]

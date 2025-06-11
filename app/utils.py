@@ -21,6 +21,7 @@ def generar_html_resumen(datos_formulario):
             <td>{muestra.get('sondeo','')}</td>
             <td>{muestra.get('numero_muestra','')}</td>
             <td>{muestra.get('tipo_material','')}</td>
+            <td>{muestra.get('tipo_material_especifico','')}</td>
             <td>{muestra.get('profundidad','')}</td>
             <td>{muestra.get('cantidad','')}</td>
             <td>{muestra.get('codigo_ensayo','')}</td>
@@ -61,6 +62,7 @@ def generar_html_resumen(datos_formulario):
                 <th>N de sondeo/apique</th>
                 <th>N de muestra</th>
                 <th>Material</th>
+                <th>Tipo de material</th>
                 <th>Profundidad o ubicacion</th>
                 <th>Cantidad</th>
                 <th>Codigo de ensayo</th>
