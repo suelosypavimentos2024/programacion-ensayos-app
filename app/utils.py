@@ -60,7 +60,7 @@ def generar_html_resumen(datos_formulario):
             <tr>
                 <th>N de sondeo/apique</th>
                 <th>N de muestra</th>
-                <th>Tipo de material</th>
+                <th>Material</th>
                 <th>Profundidad o ubicacion</th>
                 <th>Cantidad</th>
                 <th>Codigo de ensayo</th>
