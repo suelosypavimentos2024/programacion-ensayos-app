@@ -50,7 +50,7 @@ def form():
     normas_default = ["ASTM D698", "ASTM D1557", "ASTM C39", "ASTM C78"]
     
     datos_base = {
-        'tipos_material': tipos_material_default,
+        'tipos_material': tipos_material,
         'codigos_ensayo': codigos_ensayo_default,
         'unidades': unidades_default,
         'normas': normas_default
