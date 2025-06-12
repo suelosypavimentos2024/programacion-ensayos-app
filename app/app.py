@@ -61,6 +61,13 @@ def form():
             excel_datos = excel_reader.get_base_data()
             if excel_datos.get('tipos_material'): # Usar .get() para evitar KeyError si la clave no existe
                 datos_base['tipos_material'] = excel_datos['tipos_material']
+                # Ensure "Material Granular" is always present
+                if "Material Granular" not in datos_base['tipos_material']:
+                    datos_base['tipos_material'].append("Material Granular")
+            elif "Material Granular" not in datos_base['tipos_material']:
+                 # Ensure "Material Granular" is present if excel_datos doesn't have 'tipos_material'
+                datos_base['tipos_material'].append("Material Granular")
+
             if excel_datos.get('codigos_ensayo'):
                 datos_base['codigos_ensayo'] = excel_datos['codigos_ensayo']
             if excel_datos.get('unidades'):
