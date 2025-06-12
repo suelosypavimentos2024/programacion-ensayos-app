@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     const tiposMaterialParaUsar = combinedTiposMaterial;
+    console.log('form.js: Final tiposMaterialParaUsar:', JSON.stringify(tiposMaterialParaUsar));
     
     // Función para corregir todos los elementos de la página
     function corregirElementosPagina() {
@@ -123,6 +124,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Función para reconstruir un selector desde cero
     function reconstruirSelector(select, opcionesPredeterminadas) {
+        if (select.classList.contains('tipo_material')) {
+            console.log('form.js: reconstruirSelector for .tipo_material. Element:', select, 'Options to use:', JSON.stringify(opcionesPredeterminadas));
+        }
         // Guardar el valor seleccionado actualmente (si hay alguno)
         const valorSeleccionado = select.value;
         
@@ -137,6 +141,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Agregar todas las opciones predeterminadas
         opcionesPredeterminadas.forEach(opcion => {
+            if (select.classList.contains('tipo_material')) {
+                console.log('form.js: Adding option to .tipo_material:', opcion);
+            }
             const option = document.createElement('option');
             option.value = opcion;
             option.textContent = opcion;
