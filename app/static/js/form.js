@@ -34,9 +34,16 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     
     // Determine a usar para Tipo de Material
-    const tiposMaterialParaUsar = (window.tiposMaterialDisponibles && window.tiposMaterialDisponibles.length > 0) 
-        ? window.tiposMaterialDisponibles 
-        : tiposMaterialPredeterminados;
+    // Start with predeterminados, then add any unique items from window.tiposMaterialDisponibles
+    let combinedTiposMaterial = [...tiposMaterialPredeterminados];
+    if (window.tiposMaterialDisponibles && window.tiposMaterialDisponibles.length > 0) {
+        window.tiposMaterialDisponibles.forEach(tipo => {
+            if (!combinedTiposMaterial.includes(tipo)) {
+                combinedTiposMaterial.push(tipo);
+            }
+        });
+    }
+    const tiposMaterialParaUsar = combinedTiposMaterial;
     
     // Función para corregir todos los elementos de la página
     function corregirElementosPagina() {
