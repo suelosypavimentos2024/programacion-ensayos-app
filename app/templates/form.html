@@ -109,7 +109,6 @@
             <td>
                 <select class="tipo_material form-control" name="tipo_material" required>
                     <option value="">Seleccionar</option>
-                    <option value="Material Granular">Material Granular</option>
                     {% for tipo in tipos_material %}
                     <option value="{{ tipo }}">{{ tipo }}</option>
                     {% endfor %}
@@ -186,23 +185,21 @@
     <script src="{{ url_for('static', filename='js/Database.js') }}"></script>
     <script src="{{ url_for('static', filename='js/ensayos.js') }}"></script>
     <script src="{{ url_for('static', filename='js/form.js') }}"></script>
-    
+
     {% if not auth_url %}
-    <!-- Código JavaScript para pasar datos del backend a JavaScript global -->
-    <!-- Solo se necesitan estos datos si el formulario es visible -->
     <script>
         // Pasar datos del backend (Flask) a JavaScript global para form.js
         window.tiposMaterialDisponibles = {{ tipos_material|tojson|safe }};
         window.codigosEnsayoDisponibles = {{ codigos_ensayo|tojson|safe }};
+        console.log('form.html: tipos_material passed to JS (form active):', {{ tipos_material|tojson|safe }});
+    </script>
+    {% else %}
+    <script>
+        // Form is hidden due to auth_url, initialize JS variables as empty or default.
+        window.tiposMaterialDisponibles = [];
+        window.codigosEnsayoDisponibles = [];
+        console.log('form.html: auth_url present, form hidden. Initializing JS vars as empty.');
     </script>
     {% endif %}
-    <script>
-        // Pasar datos del backend (Flask) a JavaScript global para form.js
-        window.tiposMaterialDisponibles = {{ tipos_material|tojson|safe }};
-        window.codigosEnsayoDisponibles = {{ codigos_ensayo|tojson|safe }};
-    </script>
-
-    <!-- Enlazar JavaScript -->
-    <script src="{{ url_for('static', filename='js/fix-selectors.js') }}"></script>
 </body>
 </html>

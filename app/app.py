@@ -44,38 +44,40 @@ def index():
 def form():
     """Formulario de programación de ensayos"""
     # Definir valores predeterminados y cargar datos base ANTES de la verificación de credenciales
-    tipos_material = ["Concreto", "Asfalto", "Arena", "Grava", "Suelo", "Material Granular"]
+    tipos_material_default = ["Concreto", "Asfalto", "Arena", "Grava", "Suelo", "Material Granular"]
     codigos_ensayo_default = ["FLEX-001", "COMP-002", "TRAC-003", "DENS-004", "HUM-005"]
     unidades_default = ["kg", "g", "m³", "cm³"]
     normas_default = ["ASTM D698", "ASTM D1557", "ASTM C39", "ASTM C78"]
     
     datos_base = {
-        'tipos_material': tipos_material,
-        'codigos_ensayo': codigos_ensayo_default,
-        'unidades': unidades_default,
-        'normas': normas_default
+        'tipos_material': list(tipos_material_default),  # Start with a copy of the default
+        'codigos_ensayo': list(codigos_ensayo_default),
+        'unidades': list(unidades_default),
+        'normas': list(normas_default)
     }
     
     if excel_reader.exists():
         try:
             excel_datos = excel_reader.get_base_data()
-            if excel_datos.get('tipos_material'): # Usar .get() para evitar KeyError si la clave no existe
+            if 'tipos_material' in excel_datos and excel_datos['tipos_material'] is not None:
                 datos_base['tipos_material'] = excel_datos['tipos_material']
-                # Ensure "Material Granular" is always present
-                if "Material Granular" not in datos_base['tipos_material']:
-                    datos_base['tipos_material'].append("Material Granular")
-            elif "Material Granular" not in datos_base['tipos_material']:
-                 # Ensure "Material Granular" is present if excel_datos doesn't have 'tipos_material'
+            
+            # Ensure "Material Granular" is always present in the final list for datos_base
+            if "Material Granular" not in datos_base['tipos_material']:
                 datos_base['tipos_material'].append("Material Granular")
 
-            if excel_datos.get('codigos_ensayo'):
+            if 'codigos_ensayo' in excel_datos and excel_datos['codigos_ensayo'] is not None:
                 datos_base['codigos_ensayo'] = excel_datos['codigos_ensayo']
-            if excel_datos.get('unidades'):
+            if 'unidades' in excel_datos and excel_datos['unidades'] is not None:
                 datos_base['unidades'] = excel_datos['unidades']
-            if excel_datos.get('normas'):
+            if 'normas' in excel_datos and excel_datos['normas'] is not None:
                 datos_base['normas'] = excel_datos['normas']
         except Exception as e:
             app.logger.warning(f"No se pudieron cargar datos del Excel: {str(e)}. Se usarán valores predeterminados.")
+            # If an exception occurs, datos_base should still hold defaults.
+            # Ensure "Material Granular" is in the default list being used.
+            if "Material Granular" not in datos_base['tipos_material']:
+                datos_base['tipos_material'].append("Material Granular")
 
     # Verificar si el usuario está autenticado
     credentials = get_credentials()

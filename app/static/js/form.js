@@ -34,16 +34,25 @@ document.addEventListener('DOMContentLoaded', function() {
     ];
     
     // Determine a usar para Tipo de Material
-    // Start with predeterminados, then add any unique items from window.tiposMaterialDisponibles
-    let combinedTiposMaterial = [...tiposMaterialPredeterminados];
+    // Prioritize tiposMaterialDisponibles from the backend (via form.html)
+    // Use tiposMaterialPredeterminados as a fallback.
+    let tiposMaterialParaUsar;
     if (window.tiposMaterialDisponibles && window.tiposMaterialDisponibles.length > 0) {
-        window.tiposMaterialDisponibles.forEach(tipo => {
-            if (!combinedTiposMaterial.includes(tipo)) {
-                combinedTiposMaterial.push(tipo);
-            }
-        });
+        tiposMaterialParaUsar = [...new Set(window.tiposMaterialDisponibles)]; // Use Set to ensure uniqueness if backend sends duplicates
+        // Ensure "Material Granular" is present if somehow missed by backend, though app.py should handle this.
+        if (!tiposMaterialParaUsar.includes("Material Granular")) {
+            tiposMaterialParaUsar.push("Material Granular");
+        }
+    } else {
+        // Fallback to predeterminados if backend data is not available
+        tiposMaterialParaUsar = [...tiposMaterialPredeterminados];
     }
-    const tiposMaterialParaUsar = combinedTiposMaterial;
+    // Ensure "Material Granular" is definitely in the list, one final time (belt and suspenders)
+    if (!tiposMaterialParaUsar.includes("Material Granular")) {
+        tiposMaterialParaUsar.push("Material Granular");
+        // Sort if adding might mess up order, or ensure it's added consistently (e.g. at the end)
+        // For now, just pushing is fine as order isn't strictly defined beyond 'Seleccione...'
+    }
     console.log('form.js: Final tiposMaterialParaUsar:', JSON.stringify(tiposMaterialParaUsar));
     
     // Función para corregir todos los elementos de la página
