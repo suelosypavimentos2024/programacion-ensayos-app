@@ -35,25 +35,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Determine a usar para Tipo de Material
     // Prioritize tiposMaterialDisponibles from the backend (via form.html)
-    // Use tiposMaterialPredeterminados as a fallback.
+    // Use tiposMaterialPredeterminados as a fallback if backend data is missing.
     let tiposMaterialParaUsar;
-    if (window.tiposMaterialDisponibles && window.tiposMaterialDisponibles.length > 0) {
-        tiposMaterialParaUsar = [...new Set(window.tiposMaterialDisponibles)]; // Use Set to ensure uniqueness if backend sends duplicates
-        // Ensure "Material Granular" is present if somehow missed by backend, though app.py should handle this.
-        if (!tiposMaterialParaUsar.includes("Material Granular")) {
-            tiposMaterialParaUsar.push("Material Granular");
-        }
+    if (window.tiposMaterialDisponibles && Array.isArray(window.tiposMaterialDisponibles) && window.tiposMaterialDisponibles.length > 0) {
+        // Backend provided the list, use it directly. app.py should ensure it's complete and sorted.
+        tiposMaterialParaUsar = [...new Set(window.tiposMaterialDisponibles)]; 
     } else {
-        // Fallback to predeterminados if backend data is not available
+        // Fallback to predeterminados if backend data is not available or empty
+        console.warn('form.js: window.tiposMaterialDisponibles is not available or empty. Falling back to tiposMaterialPredeterminados.');
         tiposMaterialParaUsar = [...tiposMaterialPredeterminados];
     }
-    // Ensure "Material Granular" is definitely in the list, one final time (belt and suspenders)
-    if (!tiposMaterialParaUsar.includes("Material Granular")) {
-        tiposMaterialParaUsar.push("Material Granular");
-        // Sort if adding might mess up order, or ensure it's added consistently (e.g. at the end)
-        // For now, just pushing is fine as order isn't strictly defined beyond 'Seleccione...'
-    }
-    console.log('form.js: Final tiposMaterialParaUsar:', JSON.stringify(tiposMaterialParaUsar));
+    // The list from app.py is now considered the source of truth and should be correctly sorted and complete.
+    // No need for additional checks for "Material Granular" here if app.py is correct.
+    console.log('form.js: Final tiposMaterialParaUsar (source: backend if available, else fallback):', JSON.stringify(tiposMaterialParaUsar));
     
     // Función para corregir todos los elementos de la página
     function corregirElementosPagina() {

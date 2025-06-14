@@ -56,28 +56,41 @@ def form():
         'normas': list(normas_default)
     }
     
+    # Consolidate tipos_material from defaults and Excel
+    current_tipos_material = set(tipos_material_default) # Use a set for efficient addition and uniqueness
+
     if excel_reader.exists():
         try:
             excel_datos = excel_reader.get_base_data()
             if 'tipos_material' in excel_datos and excel_datos['tipos_material'] is not None:
-                datos_base['tipos_material'] = excel_datos['tipos_material']
+                for tipo in excel_datos['tipos_material']:
+                    if tipo: # Ensure non-empty strings
+                        current_tipos_material.add(tipo)
             
-            # Ensure "Material Granular" is always present in the final list for datos_base
-            if "Material Granular" not in datos_base['tipos_material']:
-                datos_base['tipos_material'].append("Material Granular")
-
+            # Update other fields from Excel if present
             if 'codigos_ensayo' in excel_datos and excel_datos['codigos_ensayo'] is not None:
-                datos_base['codigos_ensayo'] = excel_datos['codigos_ensayo']
+                datos_base['codigos_ensayo'] = list(set(codigos_ensayo_default + excel_datos['codigos_ensayo']))
             if 'unidades' in excel_datos and excel_datos['unidades'] is not None:
-                datos_base['unidades'] = excel_datos['unidades']
+                datos_base['unidades'] = list(set(unidades_default + excel_datos['unidades']))
             if 'normas' in excel_datos and excel_datos['normas'] is not None:
-                datos_base['normas'] = excel_datos['normas']
+                datos_base['normas'] = list(set(normas_default + excel_datos['normas']))
+
         except Exception as e:
-            app.logger.warning(f"No se pudieron cargar datos del Excel: {str(e)}. Se usarán valores predeterminados.")
-            # If an exception occurs, datos_base should still hold defaults.
-            # Ensure "Material Granular" is in the default list being used.
-            if "Material Granular" not in datos_base['tipos_material']:
-                datos_base['tipos_material'].append("Material Granular")
+            app.logger.warning(f"No se pudieron cargar datos del Excel: {str(e)}. Se usarán valores predeterminados para algunos campos.")
+            # current_tipos_material already holds defaults if Excel fails for tipos_material
+            # For other fields, they retain their defaults if Excel loading fails for them
+
+    # Ensure "Material Granular" is always present in the final list
+    current_tipos_material.add("Material Granular")
+    datos_base['tipos_material'] = sorted(list(current_tipos_material)) # Convert back to sorted list
+
+    # Ensure other default lists are used if not updated from Excel
+    if not datos_base.get('codigos_ensayo') or len(datos_base['codigos_ensayo']) == 0:
+        datos_base['codigos_ensayo'] = list(codigos_ensayo_default)
+    if not datos_base.get('unidades') or len(datos_base['unidades']) == 0:
+        datos_base['unidades'] = list(unidades_default)
+    if not datos_base.get('normas') or len(datos_base['normas']) == 0:
+        datos_base['normas'] = list(normas_default)
 
     # Verificar si el usuario está autenticado
     credentials = get_credentials()
